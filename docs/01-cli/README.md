@@ -80,7 +80,7 @@ done
 ssh -i <путь до вашего ключа> ubuntu@<IP OF Instances>
 ```
 
-###  Удаляем delete_infra.sh инфраструктуру ( ./delete_infra.sh )
+###  Удаляем  инфраструктуру ( ./delete_infra.sh )
 
 Удаляем Инстансы
 
