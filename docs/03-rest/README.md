@@ -1,4 +1,4 @@
-# REST API CLI
+# REST API
 
 ## Создаем таргет группу с риалами ( ./examples/create_tg.sh )
 
