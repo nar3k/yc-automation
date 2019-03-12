@@ -62,7 +62,7 @@ done
 Создадим план деплоя с новым значением переменной  cluster_size
 
 ```
-terraform plan -var cluster_size=4 -out new.plan
+terraform plan -var cluster_size=3 -out new.plan
 ```
 Применим новый план
 

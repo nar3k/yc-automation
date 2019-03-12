@@ -1,6 +1,6 @@
 token  =  ""
 cloud_id  = ""
 folder_id = ""
-cluster_size = 3
+cluster_size = 2
 public_key_path = "~/.ssh/id_rsa.pub"
-yc_image_family = "ubuntu-1804-lts"
+yc_image_family = ""

@@ -52,3 +52,4 @@ curl -X POST \
 	-H "Content-Type: application/json" \
 	-k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/networkLoadBalancers" \
   -d @create-lb.json
+rm -rf create-lb.json
