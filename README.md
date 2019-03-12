@@ -23,5 +23,5 @@
 
 1. [yc cli](docs/01-cli/README.md)
 2. [terraform](docs/02-terraform/README.md)
-3. REST API](docs/03-rest/README.md)
+3. [REST API](docs/03-rest/README.md)
 4. [Удаление инфраструктуры](docs/04-delete/README.md)
