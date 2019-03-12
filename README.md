@@ -13,7 +13,11 @@
 * Установите [go](https://www.terraform.io/downloads.html)
 * (Для пользователей windows) установите [git-bash](https://gitforwindows.org)
 * Сгенерируйте [ssh ключ](https://git-scm.com/book/ru/v1/Git-на-сервере-Создание-открытого-SSH-ключа) для доступа к инстансам
-* Добавьте себе следующие переменные окружения:
+* Скачайте репозиторий с помощью git
+```
+git clone https://github.com/nar3k/yc-automation.git
+cd yc-automation
+```
 
 
 ## Демонстрации
