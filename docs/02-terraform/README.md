@@ -78,4 +78,4 @@ for i in $(terraform output external_ip_addresses | tr -d ','); do
 done
 ```
 
-Переходим на следующее задание [REST API](docs/03-rest/README.md)
+Переходим на следующее задание [REST API](../03-rest/README.md)

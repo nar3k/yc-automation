@@ -102,4 +102,4 @@ done
 yc vpc network delete --name yc-auto-network
 ```
 
-Переходим на следующее задание [terraform](docs/02-terraform/README.md)
+Переходим на следующее задание [terraform](../02-terraform/README.md)
