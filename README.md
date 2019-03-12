@@ -14,15 +14,14 @@
 * (Для пользователей windows) установите [git-bash](https://gitforwindows.org)
 * Сгенерируйте [ssh ключ](https://git-scm.com/book/ru/v1/Git-на-сервере-Создание-открытого-SSH-ключа) для доступа к инстансам
 * Добавьте себе следующие переменные окружения:
-export YC_TOKEN=<ВАШ oauth token> - ссылку на него можно получить выполнив 'yc init')
-export YC_CLOUD_ID=<ID вашего облака> - посмотреть можно [тут](https://console.cloud.yandex.ru/?section=info)
-export YC_FOLDER=<ID вашего folder> - можно получить выполнив 'yc resource-manager folder list'
 
 
 ## Демонстрации
 
+Скачиваем репозиторий
+Для каждой демонстрации переключаемся в соотвествтующую папку. Задания лучше выполнять по порядку
 
-* [yc cli](01-cli/)
-* [terraform](02-terraform/)
-* [REST API](03-rest/)
-* [GO SDK](04-go/)
+* [yc cli](docs/01-cli/README.md)
+* [terraform](docs/02-terraform/README.md)
+* [REST API](docs/03-rest/README.md)
+* [Удаление инфраструктуры](docs/04-delete/README.md)

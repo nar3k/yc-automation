@@ -1,11 +1,16 @@
 # Работа через CLI
 
+Переходим в папку `01-cli`
+
+```
+cd ./01-cli
+```
 
 ### Создаем файл с метаданными
-Файл доступен  [тут](metadata.yaml)
-Подставьте в файл свой публичный ssh ключ
 
-###  [Создаем](create_infra.sh) инфраструктуру
+Подставьте в файл [metadata.yaml](metadata.yaml) свой публичный ssh ключ
+
+###  Создаем инфраструктуру ( ./create_infra.sh )
 Создадим сеть
 
 ```
@@ -23,17 +28,17 @@ for i in ${!zones[@]}; do
    --network-name yc-auto-network
 done
 ```
-Создадим 3 ВМ
+Создадим 3 Инстанса
 
 ```
 for i in ${!zones[@]}; do
   yc compute instance create --name yc-auto-instance-$i \
   --hostname yc-auto-instance-$i \
   --zone ru-central1-${zones[$i]} --metadata-from-file user-data=./metadata.yaml \
-  --create-boot-disk image-family=ubuntu-1804-lts \
+  --create-boot-disk image-family=ubuntu-1804-lts,size=30,type=network-nvme \
   --image-folder-id standard-images \
   --memory 1 --cores 1 --core-fraction 100 \
-  --network-interface subnet-name=yc-auto-subnet-$i,nat-ip-version=ipv4
+  --network-interface subnet-name=yc-auto-subnet-$i,nat-ip-version=ipv4 --async
 done
 ```
 ### Проверяем инфраструктуру
@@ -66,20 +71,22 @@ yc compute instance list --format json | jq .[].network_interfaces[0].primary_v4
 И попробуем сделать в них http запрос
 
 ```
-curl <IP OF Instances>
+for i in $(yc compute instance list --format json | jq .[].network_interfaces[0].primary_v4_address.one_to_one_nat.address | tr -d '"'); do  
+ curl $i;
+done
 ```
 И установить ssh-соединение
 ```
-ssh  ubuntu@84.201.140.49
+ssh -i <путь до вашего ключа> ubuntu@<IP OF Instances>
 ```
 
-### [Удаляем](delete_infra.sh) инфраструктуру
+###  Удаляем delete_infra.sh инфраструктуру ( ./delete_infra.sh )
 
 Удаляем Инстансы
 
 ```
 for i in ${!zones[@]}; do
-  yc compute instance delete --name yc-auto-instance-$i
+  yc compute instance delete --name yc-auto-instance-$i --async
 done
 ```
 
@@ -94,3 +101,5 @@ done
 ```
 yc vpc network delete --name yc-auto-network
 ```
+
+Переходим на следующее задание [terraform](docs/02-terraform/README.md)

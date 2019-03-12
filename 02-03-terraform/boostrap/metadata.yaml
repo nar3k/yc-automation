@@ -6,13 +6,6 @@ repo_upgrade: true
 apt:
   preserve_sources_list: true
 
-users:
-    - default
-    - name: ubuntu
-      sudo: ALL=(ALL) NOPASSWD:ALL
-      shell: /bin/bash
-      ssh-authorized-keys:
-        - "<PUT YOUT SSH KEY HERE>"
 packages:
   - nginx
 
