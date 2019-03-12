@@ -1,6 +1,6 @@
 # REST API
 
-## Создаем таргет группу с риалами ( ./examples/create_tg.sh )
+## Создадим [Целевую группу](https://cloud.yandex.ru/docs/load-balancer/concepts/target-resources) с нашими инстансами ( ./examples/create_tg.sh )
 
 Создадим таргет группу -
 
@@ -69,7 +69,7 @@ done
 rm -rf add_real.json.json
 ```
 
-### Создадим балансировщик (./examples/create_lb.sh )
+### Создадим [балансировщик](https://cloud.yandex.ru/docs/load-balancer/concepts/index)  (./examples/create_lb.sh )
 
 
 ```
