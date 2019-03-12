@@ -8,7 +8,7 @@ cd ./01-cli
 
 ### Создаем файл с метаданными
 
-Подставьте в файл [metadata.yaml](metadata.yaml) свой публичный ssh ключ
+Подставьте в файл [metadata.yaml](../01-cli/metadata.yaml) свой публичный ssh ключ
 
 ###  Создаем инфраструктуру ( ./create_infra.sh )
 Создадим сеть
