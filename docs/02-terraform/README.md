@@ -21,10 +21,10 @@ cd ../02-03-terraform
 cp terraform.tfvars_example terraform.tfvars
 ```
 
-Заполним значения переменных в файле
-* token  - <ВАШ oauth token> - ссылку на него можно получить выполнив 'yc init')
-* cloud_id  - <ID вашего облака> - посмотреть можно [тут](https://console.cloud.yandex.ru/?section=info)
-* folder_id - можно получить выполнив 'yc resource-manager folder list'
+Заполним значения переменных в файле значениями, полученными при выводе 'yc config list'
+* token  
+* cloud_id 
+* folder_id
 
 Остальные значения измените
 
