@@ -14,7 +14,7 @@ cd ./01-cli
 Создадим сеть
 
 ```
-yc vpc network create --name yc-auto-demo
+yc vpc network create --name yc-auto-network
 ```
 Создадим 3 подсети
 
