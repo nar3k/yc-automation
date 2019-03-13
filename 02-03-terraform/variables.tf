@@ -1,5 +1,6 @@
 variable "public_key_path" {
   description = "Path to public key file"
+  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "token" {
@@ -16,13 +17,13 @@ variable "cloud_id" {
 
 
 variable "zone" {
-  description = "Yandex Cloud default Zone for provisoned resources"
+  description = "Yandex Cloud default Zone for provisioned resources"
   default = "ru-central1-a"
 }
 
 
 variable "zones" {
-  description = "Yandex Cloud default Zone for provisoned resources"
+  description = "Yandex Cloud default Zone for provisioned resources"
   default = ["ru-central1-a","ru-central1-b","ru-central1-c"]
 }
 
@@ -31,13 +32,8 @@ variable "yc_image_family" {
   default = "ubuntu-1804-lts"
 }
 
-# example specific
-variable "image_id" {
-  default = "fd8cn8os7a9dfgosb89r" # it's ubuntu-1804-lts
-}
-
 variable "cluster_size" {
-  default = 6
+  default = 3
 }
 
 variable "instance_cores" {

@@ -2,7 +2,7 @@
 
 ## Создадим [Целевую группу](https://cloud.yandex.ru/docs/load-balancer/concepts/target-resources) с нашими инстансами ( ./examples/create_tg.sh )
 
-Создадим таргет группу -
+Создадим целевую группу -
 
 ```
 YC_FOLDER_ID=$(terraform output folder_id | tr  -d "\"")
@@ -25,7 +25,7 @@ curl -X POST \
 rm -rf create-tg.json
 ```
 
-Подключим к таргет группе созданные через terraform веб сервера
+Подключим к целевой группу группе созданные через terraform веб сервера
 
 ```
 
@@ -69,16 +69,13 @@ done
 rm -rf add_real.json.json
 ```
 
-### Создадим [балансировщик](https://cloud.yandex.ru/docs/load-balancer/concepts/index)  (./examples/create_lb.sh )
+### Создадим [балансировщик](https://cloud.yandex.ru/docs/load-balancer/concepts/index) с целевой группой (./examples/create_lb.sh )
 
 
+Создадим балансировщик
 ```
-echo "creating lb config"
-YC_FOLDER_ID=$(terraform output folder_id | tr  -d "\"")
+YC_FOLDER_ID=$(yc config get folder-id)
 
-TARGET_GROUP_ID=$(curl -X GET  --silent -H "Authorization: Bearer $(yc iam create-token)"  \
- -H "Content-Type: application/json" \
- -k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/targetGroups?folderId=${YC_FOLDER_ID}"  | jq .targetGroups[0].id | tr -d "\"")
 
 cat > create-lb.json <<EOF
 {
@@ -96,40 +93,76 @@ cat > create-lb.json <<EOF
           "regionId": "ru-central1"
       }
       }
-    ],
-    "attachedTargetGroups": [
-    {
-      "targetGroupId": "${TARGET_GROUP_ID}",
-      "healthChecks": [
-        {
-          "name": "http",
-          "interval": "2s",
-          "timeout": "1s",
-          "unhealthyThreshold": "2",
-          "healthyThreshold": "2",
-          "httpOptions": {
-            "port": "80",
-            "path": "/"
-          },
-        }
-      ]
-    }
-  ]
-
+    ]
 }
 EOF
 
+
+
+echo "Creating Load balancer"
 
 curl -X POST \
   -H "Authorization: Bearer $(yc iam create-token)" \
 	-H "Content-Type: application/json" \
 	-k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/networkLoadBalancers" \
   -d @create-lb.json
+rm -rf create-lb.json
+
+sleep 15
 ```
+
+Подключим к балансировщику целевую группу
+```
+
+LB_ID=$(curl -X GET  --silent -H "Authorization: Bearer $(yc iam create-token)"  \
+ -H "Content-Type: application/json" \
+ -k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/networkLoadBalancers?folderId=${YC_FOLDER_ID}"  | jq .networkLoadBalancers[0].id | tr -d "\"")
+
+TARGET_GROUP_ID=$(curl -X GET  --silent -H "Authorization: Bearer $(yc iam create-token)"  \
+ -H "Content-Type: application/json" \
+ -k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/targetGroups?folderId=${YC_FOLDER_ID}"  | jq .targetGroups[0].id | tr -d "\"")
+
+
+
+cat > attach-tg.json <<EOF
+ {
+     "attachedTargetGroup": {
+
+      "targetGroupId": "${TARGET_GROUP_ID}",
+      "healthChecks": [
+         {
+           "name": "http",
+           "interval": "2s",
+           "timeout": "1s",
+           "unhealthyThreshold": "2",
+           "healthyThreshold": "2",
+           "httpOptions": {
+            "port": "80",
+            "path": "/index.html"
+           },
+         }
+      ]
+     }
+}
+EOF
+echo "Attaching target group to  Load balacer"
+
+
+curl -X POST \
+  -H "Authorization: Bearer $(yc iam create-token)" \
+	-H "Content-Type: application/json" \
+	-k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/networkLoadBalancers/${LB_ID}:attachTargetGroup" \
+  -d @attach-tg.json
+
+
+rm -rf attach-tg.json
+```
+
+
 ### Проверим балансировщик (./examples/check_lb.sh )
 
 ```
-echo "checking lb config"
+echo "checking load balancer "
 
 
 EXTERNAL_IP=$(curl -X GET --silent  -H "Authorization: Bearer $(yc iam create-token)"   \

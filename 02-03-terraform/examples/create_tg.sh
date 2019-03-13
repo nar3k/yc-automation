@@ -60,4 +60,4 @@ EOF
   sleep 2
 done
 
-rm -rf create-tg.json
+rm -rf add_real.json
