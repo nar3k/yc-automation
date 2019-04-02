@@ -15,7 +15,7 @@ EOF
 curl -X POST \
   -H "Authorization: Bearer $(yc iam create-token)" \
 	-H "Content-Type: application/json" \
-	-k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/targetGroups" \
+	-k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1/targetGroups" \
   -d @create-tg.json
 
 rm -rf create-tg.json
@@ -23,7 +23,7 @@ rm -rf create-tg.json
 
 TARGET_GROUP_ID=$(curl -X GET  --silent -H "Authorization: Bearer $(yc iam create-token)"  \
  -H "Content-Type: application/json" \
- -k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/targetGroups?folderId=${YC_FOLDER_ID}"  | jq .targetGroups[0].id | tr -d "\"")
+ -k "https://load-balancer.api.cloud.yandex.net/load-balancer/v1/targetGroups?folderId=${YC_FOLDER_ID}"  | jq .targetGroups[0].id | tr -d "\"")
 
 SUBNET_ID_LIST=$(terraform output subnet_ids)
 SUBNET_ID_LIST=($(echo "$SUBNET_ID_LIST" | tr ',' '\n'))
@@ -54,7 +54,7 @@ EOF
   curl -X POST \
     -H "Authorization: Bearer $(yc iam create-token)" \
   	-H "Content-Type: application/json" \
-    -k https://load-balancer.api.cloud.yandex.net/load-balancer/v1alpha/targetGroups/${TARGET_GROUP_ID}:addTargets \
+    -k https://load-balancer.api.cloud.yandex.net/load-balancer/v1/targetGroups/${TARGET_GROUP_ID}:addTargets \
     -d @add_real.json
 
   sleep 2
